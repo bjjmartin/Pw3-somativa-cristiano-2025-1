@@ -1,36 +1,33 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import './App.css'
 
-import BookHelloKitty from './components/bookHelloKitty'
-
-import  capa_livro from './assets/cavernas_aco.jpg'
-
 function App() {
+  const [count, setCount] = useState(0)
+
   return (
     <>
       <div>
-        <h1> PW3 - WEBAPP - LIVRARIA XIKKAYA!!!!!!! </h1>
-        <BookHelloKitty 
-        titulo = 'As aventuras da Hello Kitty'
-        autor = 'Xikkaya'
-        imagem = {capa_livro}/>
-
-
-         {/* <BookHelloKitty 
-        titulo = 'As aventuras de uma fisioterapeuta'
-        autor = 'Chatpt'
-        imagem = 'Uma imagem vai aparecer aqui'/>
-
-         <BookHelloKitty 
-        titulo = 'As aventuras de uma programadora'
-        autor = 'Filó'
-        imagem = 'Uma imagem vai aparecer aqui'/>
-
-
-        <BookHelloKitty 
-        titulo = 'A grande Família'
-        autor = 'Mãe Igor e Pai Petterson '
-        imagem = 'Uma imagem vai aparecer aqui'/> */}
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
       </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
     </>
   )
 }
