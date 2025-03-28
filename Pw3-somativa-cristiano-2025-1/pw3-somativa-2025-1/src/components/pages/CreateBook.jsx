@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import style from './CreateBook.module.css'
 
 import Input from "../form/Input";
@@ -11,6 +11,9 @@ const CreateBook = ()=>{
     /* CRIA A ESTRUTURA DE STATE PARA OS DADOS DE LIVRO */
     const [book, setBook] = useState({});
     
+    /* CRIA A ESTRUTURA DE STATE PARA OS DADOS DE CATEGORIAS */
+    const [categories, setCategories] = useState([]);
+    
 function handlerChangeBook(event) {
     setBook({ ...book, [event.target.name] : event.target.value});
     console.log(book);
@@ -18,7 +21,7 @@ function handlerChangeBook(event) {
 
 //Captura de dados do elemento de select
 function handlerChangeCategory(event) {
-    setBook ({...book, category : event.target.options[event.target.selectedIndex].text})
+    setBook ({...book, cod_category : event.target.options[event.target.selectedIndex].text})
     console.log(book);
 }
 
@@ -27,6 +30,27 @@ function submit (event) {
     event.preventDefault()
     console.log(book);
 }
+
+// RECUPERA OS DADOS DE CATEGORIA DA APIREST: 
+useEffect(() => {
+    fetch ('https://127.0.0.1:5000/listagemCategorias', {
+        method: 'GET',
+        headers: {
+            
+            'Content-Type':'application/json',
+            'Acess-Control-Allow-Origin':'*',
+            'Acess-Control-Allow-Headers':'*'
+        }
+    }), then ((response) => 
+        response.json()
+        //console.log(response.json());
+    ).then((categorias) => {
+        console.log('TESTE' + categorias.data);
+    }).catch((error) => {
+        console.log('ERRO' + error);
+    })
+
+}, []);
 
     return(
 
@@ -37,8 +61,8 @@ function submit (event) {
             <Input
                 text='Nome do livro'
                 type='text'
-                name='txt_livro'
-                id='txt_livro'
+                name='nome_livro'
+                id='nome_livro'
                 placeholder='Digite o nome do livro'
                 handlerChange={handlerChangeBook}
             />
@@ -46,8 +70,8 @@ function submit (event) {
             <Input
                 text='Autor do livro'
                 type='text'
-                name='txt_autor'
-                id='txt_autor'
+                name='autor_livro'
+                id='autor_livro'
                 placeholder='Digite o nome do autor do livro'
                 handlerChange={handlerChangeBook}
             />
@@ -55,15 +79,15 @@ function submit (event) {
             <Input
                 text='Descrição do livro'
                 type='text'
-                name='txt_descricao'
-                id='txt_descricao'
+                name='descricao_livro'
+                id='descricao_livro'
                 placeholder='Digite a descrição do livro'
                 handlerChange={handlerChangeBook}
             />
 
             <Select 
-                name='slc_categoria'
-                id='slc_categoria'
+                name='cod_categoria'
+                id='cod_categoria'
                 text='Categoria do livro'
                 handlerChange={handlerChangeCategory}
             />
