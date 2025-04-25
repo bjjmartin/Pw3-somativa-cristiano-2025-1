@@ -1,10 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import style from './ListBook.module.css'
 
+import capeta from '../../assets/cavernas_aco.jpg';
+
+import BookCard from "../BookCard";
+import ContainerBook from "../layout/ContainerBook";
+
 const ListBook = ()=>{
+
+    const [books, setBooks] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:5000/listagemLivros', {
+            method: 'GET', 
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Acess-Control-Allow-Origin':'*',
+                'Acess-Control-Allow-Headers': '*',
+            }
+        })
+        .then((resp)=> resp.json())
+        .then((bookData) => {
+            console.log(bookData.data);
+            setBooks (bookData.data);
+        })
+        .catch((err) => {console.log(err)});
+    },[]);
+
     return(
         <section>
             <h1>LIST BOOK</h1>
+
+            <ContainerBook>
+            {
+                books.map((book) => (
+
+                    <BookCard
+                    nome_livro= {book.nome_livro}
+                    autor_livro= {book.autor_livro}
+                    imagem = {capeta}
+                    key = {book.cod_livro}
+                    />  
+
+                ))
+            }
+            </ContainerBook>
+          
         </section>
     )
 }
